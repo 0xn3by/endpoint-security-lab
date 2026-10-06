@@ -1,0 +1,173 @@
+{
+  "recorded_at": "2026-10-06T05:41:09.536039+00:00",
+  "scope": "Current local execution; no fresh Splunk/Wazuh engine run",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "scripts/check_repository.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Repository checks: {'python': 8, 'xml': 4, 'markdown_links': 90} failures: 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_contradictory_alert_fields_fail (test_evidence_verifier.EvidenceVerifierTests.test_contradictory_alert_fields_fail) ... ok\ntest_decoder_numeric_strings_match (test_evidence_verifier.EvidenceVerifierTests.test_decoder_numeric_strings_match) ... ok\ntest_duplicate_source_fails (test_evidence_verifier.EvidenceVerifierTests.test_duplicate_source_fails) ... ok\ntest_matching_actual_shape (test_evidence_verifier.EvidenceVerifierTests.test_matching_actual_shape) ... ok\ntest_missing_alert (test_evidence_verifier.EvidenceVerifierTests.test_missing_alert) ... ok\ntest_missing_destination_fails (test_evidence_verifier.EvidenceVerifierTests.test_missing_destination_fails) ... ok\ntest_missing_one_connection_fails (test_evidence_verifier.EvidenceVerifierTests.test_missing_one_connection_fails) ... ok\ntest_other_run_cannot_satisfy (test_evidence_verifier.EvidenceVerifierTests.test_other_run_cannot_satisfy) ... ok\ntest_wrong_rule_cannot_satisfy (test_evidence_verifier.EvidenceVerifierTests.test_wrong_rule_cannot_satisfy) ... ok\ntest_wrong_source_time_fails (test_evidence_verifier.EvidenceVerifierTests.test_wrong_source_time_fails) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.000s\n\nOK\n"
+    },
+    {
+      "command": [
+        "bash",
+        "-n",
+        "scripts/manager-entrypoint.sh",
+        "tests/logtest-entrypoint.sh"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "compose",
+        "config",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/verify_ingestion.py",
+        "evidence/private/937ce4fd-4cbf-42be-80e4-bd256764ec3a/network.jsonl",
+        "evidence/private/937ce4fd-4cbf-42be-80e4-bd256764ec3a/alerts.jsonl"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"run_id\": \"937ce4fd-4cbf-42be-80e4-bd256764ec3a\",\n  \"unique_connections\": 6,\n  \"matching_alerts\": 6,\n  \"rule\": \"100140\",\n  \"status\": \"PASS\",\n  \"scope\": \"helper JSON -> manager localfile -> Wazuh alert; no Windows agent\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check_repository.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Repository checks: {'python': 8, 'xml': 4, 'markdown_links': 105} failures: 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_contradictory_alert_fields_fail (test_evidence_verifier.EvidenceVerifierTests.test_contradictory_alert_fields_fail) ... ok\ntest_decoder_numeric_strings_match (test_evidence_verifier.EvidenceVerifierTests.test_decoder_numeric_strings_match) ... ok\ntest_duplicate_source_fails (test_evidence_verifier.EvidenceVerifierTests.test_duplicate_source_fails) ... ok\ntest_matching_actual_shape (test_evidence_verifier.EvidenceVerifierTests.test_matching_actual_shape) ... ok\ntest_missing_alert (test_evidence_verifier.EvidenceVerifierTests.test_missing_alert) ... ok\ntest_missing_destination_fails (test_evidence_verifier.EvidenceVerifierTests.test_missing_destination_fails) ... ok\ntest_missing_one_connection_fails (test_evidence_verifier.EvidenceVerifierTests.test_missing_one_connection_fails) ... ok\ntest_other_run_cannot_satisfy (test_evidence_verifier.EvidenceVerifierTests.test_other_run_cannot_satisfy) ... ok\ntest_wrong_rule_cannot_satisfy (test_evidence_verifier.EvidenceVerifierTests.test_wrong_rule_cannot_satisfy) ... ok\ntest_wrong_source_time_fails (test_evidence_verifier.EvidenceVerifierTests.test_wrong_source_time_fails) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/verify_ingestion.py",
+        "evidence/validation/live-network/events.redacted.jsonl",
+        "evidence/validation/live-network/alerts.extract.jsonl"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"run_id\": \"937ce4fd-4cbf-42be-80e4-bd256764ec3a\",\n  \"unique_connections\": 6,\n  \"matching_alerts\": 6,\n  \"rule\": \"100140\",\n  \"status\": \"PASS\",\n  \"scope\": \"helper JSON -> manager localfile -> Wazuh alert; no Windows agent\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "retained_rule_transcripts": [
+    {
+      "case": "powershell-encoded",
+      "transcript_agrees": true
+    },
+    {
+      "case": "powershell-bypass",
+      "transcript_agrees": true
+    },
+    {
+      "case": "run-key",
+      "transcript_agrees": true
+    },
+    {
+      "case": "account-created",
+      "transcript_agrees": true
+    },
+    {
+      "case": "network-test-port",
+      "transcript_agrees": true
+    },
+    {
+      "case": "powershell-encoded-negative",
+      "transcript_agrees": true
+    },
+    {
+      "case": "powershell-bypass-negative",
+      "transcript_agrees": true
+    },
+    {
+      "case": "run-key-negative",
+      "transcript_agrees": true
+    },
+    {
+      "case": "account-created-negative",
+      "transcript_agrees": true
+    },
+    {
+      "case": "network-test-port-negative",
+      "transcript_agrees": true
+    },
+    {
+      "case": "powershell-encoded-missing",
+      "transcript_agrees": true
+    },
+    {
+      "case": "powershell-bypass-missing",
+      "transcript_agrees": true
+    },
+    {
+      "case": "run-key-missing",
+      "transcript_agrees": true
+    },
+    {
+      "case": "account-created-missing",
+      "transcript_agrees": true
+    },
+    {
+      "case": "network-test-port-missing",
+      "transcript_agrees": true
+    }
+  ],
+  "final_checks_at": "2026-10-06T10:25:31.025168+00:00",
+  "runtime_access_probe": {
+    "command": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.Names}} {{.Status}}"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock\n",
+    "meaning": "Fresh runtime not verified when Docker is inaccessible"
+  }
+}

@@ -5,7 +5,7 @@
 Run from the repository root:
 
 ```bash
-cp .env.example .env
+cp -n .env.example .env
 mkdir -p .runtime/telemetry
 touch .runtime/telemetry/network.jsonl
 docker compose up -d --wait --wait-timeout 90
@@ -71,7 +71,7 @@ sudo sysctl -w vm.max_map_count=262144
 
 Open `https://127.0.0.1:8443` on Fedora. Use the generated admin credential in `.runtime/full-stack-credentials.json`. Accept the locally generated certificate only after confirming this is your local service. Allow several minutes for first initialization. Select the Wazuh threat-hunting/events view and the `wazuh-alerts-*` data view; search `rule.id:100100` etc. Set the time picker to the actual UTC run window.
 
-From the repository root, verify infrastructure with `python3 scripts/verify_full_stack.py`. The retained [result](../evidence/validation/full-stack.json) confirms authenticated indexer/dashboard status and manager API access. Filebeat's output test also succeeded. This does not establish Windows scenario alert visibility. The helper validates the generated CA chain in compatibility mode because the upstream lab CA lacks the keyUsage extension required by newer Python strict mode; it permits the service-name/localhost hostname difference. It does not weaken service configuration.
+From the repository root, verify infrastructure with `python3 scripts/verify_full_stack.py`. The retained [result](../evidence/validation/full-stack.json) confirms authenticated indexer/dashboard status and manager API access. The build notes report a successful Filebeat output test, but no transcript is retained; this result is NOT VERIFIED by the current audit. This does not establish Windows scenario alert visibility. The helper validates the generated CA chain in compatibility mode because the upstream lab CA lacks the keyUsage extension required by newer Python strict mode; it permits the service-name/localhost hostname difference. It does not weaken service configuration.
 
 The upstream certificate generator printed a missing `find` warning during cleanup, but generated certificates were present and used successfully by the services and Filebeat. Keep private-key permissions intact. Stop the full stack with `docker compose -f .runtime/wazuh-docker/single-node/docker-compose.yml stop` from the repository root before returning to the lightweight deployment.
 
@@ -84,7 +84,7 @@ The two stacks have independent enrollment keys: re-enroll Windows when switchin
 - **Mount access denied on Fedora:** keep the supplied `:Z`/`:z` labels and inspect `sudo ausearch -m AVC -ts recent`. Shared inputs require `:z`. Do not turn off SELinux.
 - **Agent disconnected:** test Windows `Test-NetConnection MANAGER_IP -Port 1514` and `-Port 1515`, check manager binding, firewall, agent service, agent log, and duplicate enrollment names.
 - **Event present locally but absent centrally:** check channel spelling, duplicate collection blocks, agent connectivity, manager archives, and UTC clock alignment. Restart the agent after configuration edits.
-- **Archives contain event but alert missing:** inspect its exact `data.win` fields; replay its raw `full_log` through logtest, inspect rule parents and field casing. Do not feed the alert wrapper as a raw event.
+- **Archives contain event but alert missing:** inspect its exact `data.win` fields, rule parents and field casing. Native EventChannel replay is not equivalent to ordinary JSON CLI logtest; use the isolated harness described in [methodology](../docs/detection-methodology.md) for predicate checks, then confirm through the real agent. Do not feed the alert wrapper as a raw event or change the live decoder to make a test pass.
 - **Alert in file but absent in dashboard:** check Filebeat, indexer health, dashboard time range and `wazuh-alerts-*`. This is an indexing issue, not necessarily a detection issue.
 - **No loopback Sysmon Event 3:** confirm NetworkConnect collection. If the Sysmon build does not emit loopback events, use the verified Linux fallback or a separately controlled lab listener. Do not claim Windows network coverage without a captured event.
 

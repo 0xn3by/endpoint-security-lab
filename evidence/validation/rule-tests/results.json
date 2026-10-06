@@ -1,0 +1,107 @@
+[
+  {
+    "case": "powershell-encoded",
+    "expected_rule": 100100,
+    "should_match": true,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "powershell-bypass",
+    "expected_rule": 100100,
+    "should_match": true,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "run-key",
+    "expected_rule": 100110,
+    "should_match": true,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "account-created",
+    "expected_rule": 100120,
+    "should_match": true,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "network-test-port",
+    "expected_rule": 100130,
+    "should_match": true,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "powershell-encoded-negative",
+    "expected_rule": 100100,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "powershell-bypass-negative",
+    "expected_rule": 100100,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "run-key-negative",
+    "expected_rule": 100110,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "account-created-negative",
+    "expected_rule": 100120,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "network-test-port-negative",
+    "expected_rule": 100130,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "powershell-encoded-missing",
+    "expected_rule": 100100,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "powershell-bypass-missing",
+    "expected_rule": 100100,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "run-key-missing",
+    "expected_rule": 100110,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "account-created-missing",
+    "expected_rule": 100120,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  },
+  {
+    "case": "network-test-port-missing",
+    "expected_rule": 100130,
+    "should_match": false,
+    "passed": true,
+    "provenance": "synthetic JSON; real Wazuh engine with test-only rule 60000 JSON bridge"
+  }
+]

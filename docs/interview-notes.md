@@ -28,6 +28,6 @@
 
 **What are false positives?** Benign activity flagged as suspicious. I investigate the exact behavior and authorization before tuning, and avoid blanket exclusions for all PowerShell or all administrators.
 
-**What limitations does this lab have?** Limited hosts/time, no malicious payloads, no enterprise baseline, a helper-observed Linux fallback, and pending Windows/full-dashboard verification. Contract tests do not establish production detection quality.
+**What limitations does this lab have?** Limited hosts/time, no malicious payloads, no enterprise baseline, a helper-observed Linux fallback, and pending native Windows execution and dashboard scenario verification. A retained full-stack health summary is infrastructure evidence only. Contract tests do not establish production detection quality.
 
 **What would enterprise EDR add?** Depending on the product: kernel telemetry, tamper protection, memory inspection, behavioral analytics, remote collection, host isolation, fleet-wide hunting, retention and response orchestration. This lab does not demonstrate those capabilities.

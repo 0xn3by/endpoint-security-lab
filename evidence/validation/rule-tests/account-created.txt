@@ -1,0 +1,29 @@
+
+
+Starting wazuh-logtest v4.14.8
+Type one log per line
+
+**Phase 1: Completed pre-decoding.
+	full event: '{"win": {"system": {"providerName": "Microsoft-Windows-Security-Auditing", "channel": "Security", "eventID": "4720", "severityValue": "AUDIT_SUCCESS", "computer": "SYNTHETIC-CONTRACT-ONLY"}, "eventdata": {"targetUserName": "edrlab_demo", "subjectUserName": "labadmin"}}}'
+
+**Phase 2: Completed decoding.
+	name: 'json'
+	win.eventdata.subjectUserName: 'labadmin'
+	win.eventdata.targetUserName: 'edrlab_demo'
+	win.system.channel: 'Security'
+	win.system.computer: 'SYNTHETIC-CONTRACT-ONLY'
+	win.system.eventID: '4720'
+	win.system.providerName: 'Microsoft-Windows-Security-Auditing'
+	win.system.severityValue: 'AUDIT_SUCCESS'
+
+**Phase 3: Completed filtering (rules).
+	id: '100120'
+	level: '7'
+	description: 'EDR lab: account created; validate actor and authorization'
+	groups: '['edr_lab']'
+	firedtimes: '1'
+	mail: 'True'
+	mitre.id: '['T1136.001']'
+	mitre.tactic: '['Persistence']'
+	mitre.technique: '['Local Account']'
+**Alert to be generated.

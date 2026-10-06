@@ -1,0 +1,28 @@
+
+
+Starting wazuh-logtest v4.14.8
+Type one log per line
+
+**Phase 1: Completed pre-decoding.
+	full event: '{"win": {"system": {"providerName": "Microsoft-Windows-Sysmon", "channel": "Microsoft-Windows-Sysmon/Operational", "eventID": "13", "severityValue": "INFORMATION", "computer": "SYNTHETIC-CONTRACT-ONLY"}, "eventdata": {"targetObject": "HKU\\S-1-5-21-TEST\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\EDRLabHarmless"}}}'
+
+**Phase 2: Completed decoding.
+	name: 'json'
+	win.eventdata.targetObject: 'HKU\S-1-5-21-TEST\Software\Microsoft\Windows\CurrentVersion\Run\EDRLabHarmless'
+	win.system.channel: 'Microsoft-Windows-Sysmon/Operational'
+	win.system.computer: 'SYNTHETIC-CONTRACT-ONLY'
+	win.system.eventID: '13'
+	win.system.providerName: 'Microsoft-Windows-Sysmon'
+	win.system.severityValue: 'INFORMATION'
+
+**Phase 3: Completed filtering (rules).
+	id: '100110'
+	level: '8'
+	description: 'EDR lab: Run key value set; investigate persistence intent'
+	groups: '['edr_lab']'
+	firedtimes: '1'
+	mail: 'True'
+	mitre.id: '['T1547.001']'
+	mitre.tactic: '['Persistence', 'Privilege Escalation']'
+	mitre.technique: '['Registry Run Keys / Startup Folder']'
+**Alert to be generated.

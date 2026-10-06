@@ -12,7 +12,7 @@ Start with the alert ID, UTC window, exact rule/version, and raw event. Save the
 8. **Children?** Find Event 1 records whose parentProcessGuid equals the suspicious process GUID. Inspect whoami, cmd, script interpreters and unexpected tools.
 9. **Network?** Join Event 3 by process GUID; capture destination, port, protocol, timing and initiation. Seek DNS/proxy/firewall evidence if needed. Do not upload private data to public lookup services.
 10. **Persistence?** Inspect Event 13, Run/RunOnce keys, scheduled tasks, startup folders and services as appropriate. A write proves an artifact exists; it does not prove later execution.
-11. **Accounts changed?** Inspect 4720, 4726 and, where enabled, 4732/4733. Compare target SID with Administrators SID `S-1-5-32-544`; do not rely on localized group names.
+11. **Accounts changed?** Inspect 4720, 4726 and, where enabled, 4732/4733. In 4732/4733, compare the group's TargetSid with Administrators SID `S-1-5-32-544`; MemberSid identifies the added/removed account. In 4720, TargetSid identifies the created account, not its group. Do not rely on localized group names.
 12. **Before?** Search 5–15 minutes earlier for logon, browser/download, document opening, software deployment and parent processes.
 13. **After?** Search for children, connections, file changes, persistence, account use and cleanup. Broaden time/scope only when evidence warrants it.
 14. **Could it be legitimate?** Compare exact payload, approved tool hash, actor, schedule, source and destination with the change record. Document competing explanations.
@@ -22,6 +22,8 @@ Start with the alert ID, UTC window, exact rule/version, and raw event. Save the
 18. **Remediation?** Recommend containment proportional to evidence: stop a confirmed malicious process, remove confirmed unauthorized persistence, disable a compromised account, rotate exposed credentials and patch the entry point. Obtain operational authorization in a real SOC. Validate recovery and monitor for recurrence.
 
 ## Practical queries
+
+Field reference: Microsoft's [4732 schema](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4732) distinguishes the group's TargetSid from MemberSid.
 
 Dashboard KQL examples, after confirming fields in your own alert:
 

@@ -1,0 +1,7 @@
+<!-- Merge inside existing ossec_config; do not replace agent enrollment/client configuration.
+     Security is collected by default: edit its existing block instead of duplicating it. -->
+<ossec_config>
+  <localfile><location>Microsoft-Windows-Sysmon/Operational</location><log_format>eventchannel</log_format></localfile>
+  <localfile><location>Microsoft-Windows-PowerShell/Operational</location><log_format>eventchannel</log_format></localfile>
+  <localfile><location>Security</location><log_format>eventchannel</log_format></localfile>
+</ossec_config>

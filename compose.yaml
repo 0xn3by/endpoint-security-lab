@@ -1,0 +1,30 @@
+name: edr-lab
+services:
+  manager:
+    image: wazuh/wazuh-manager:4.14.8
+    hostname: edr-lab-manager
+    # Engine-only: no Filebeat, indexer or dashboard; API has no published port.
+    entrypoint: ["/bin/bash", "-c"]
+    command: ["bash /lab-entrypoint.sh"]
+    stop_grace_period: 30s
+    healthcheck:
+      test: ["CMD-SHELL", "pidof wazuh-analysisd >/dev/null && pidof wazuh-logcollector >/dev/null && test -S /var/ossec/queue/sockets/logtest"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 30s
+    ports:
+      - "${WAZUH_BIND_IP:-127.0.0.1}:1514:1514"
+      - "${WAZUH_BIND_IP:-127.0.0.1}:1515:1515"
+    volumes:
+      - ./scripts/manager-entrypoint.sh:/lab-entrypoint.sh:ro,z
+      - ./config/manager.conf:/wazuh-config-mount/etc/ossec.conf:ro,z
+      - ./detections/local_rules.xml:/wazuh-config-mount/etc/rules/edr_lab_rules.xml:ro,z
+      - ./.runtime/telemetry:/lab:ro,Z
+      - manager_logs:/var/ossec/logs
+      - manager_queue:/var/ossec/queue
+      - manager_etc:/var/ossec/etc
+volumes:
+  manager_logs:
+  manager_queue:
+  manager_etc:

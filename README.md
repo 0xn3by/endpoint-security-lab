@@ -1,4 +1,24 @@
-# EDR / Endpoint Detection & Investigation Lab
+<p align="center">
+  <img src="assets/readme/banner.svg" alt="EDR lab: follow the process, explain the evidence. Observe, investigate, report." width="1200">
+</p>
+
+<h1 align="center">EDR / Endpoint Detection &amp; Investigation Lab</h1>
+
+<p align="center">
+  <a href="reports/final-endpoint-report.md"><img src="assets/readme/lab-badge.svg" alt="Scope: personal lab" height="28"></a>
+  <a href="compose.yaml"><img src="assets/readme/wazuh-badge.svg" alt="Wazuh version: 4.14.8" height="28"></a>
+  <a href="setup/wazuh-setup.md"><img src="assets/readme/docker-badge.svg" alt="Deployment: Docker Compose" height="28"></a>
+  <a href="reports/validation-matrix.md"><img src="assets/readme/windows-badge.svg" alt="Windows telemetry: not verified" height="28"></a>
+</p>
+
+<p align="center">
+  <a href="setup/README.md">Set up the lab</a> &middot;
+  <a href="docs/endpoint-triage-playbook.md">Triage playbook</a> &middot;
+  <a href="reports/validation-matrix.md">Validation matrix</a> &middot;
+  <a href="docs/interview-notes.md">Interview notes</a>
+</p>
+
+<p align="center"><sub>Static repository badges; validation status links to the recorded evidence.</sub></p>
 
 A personal endpoint-security portfolio project built around Wazuh, safe activity simulations, and evidence-based SOC triage. It shows how to move from an endpoint event to a defensible investigation: process ancestry, command-line analysis, user context, correlation, legitimate explanations, severity and escalation.
 

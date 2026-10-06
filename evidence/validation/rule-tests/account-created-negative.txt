@@ -1,0 +1,34 @@
+
+
+Starting wazuh-logtest v4.14.8
+Type one log per line
+
+**Phase 1: Completed pre-decoding.
+
+**Phase 2: Completed decoding.
+	name: 'json'
+	win.eventdata.subjectUserName: 'labadmin'
+	win.eventdata.targetUserName: 'edrlab_demo'
+	win.system.channel: 'Security'
+	win.system.computer: 'SYNTHETIC-CONTRACT-ONLY'
+	win.system.eventID: '4726'
+	win.system.providerName: 'Microsoft-Windows-Security-Auditing'
+	win.system.severityValue: 'AUDIT_SUCCESS'
+
+**Phase 3: Completed filtering (rules).
+	id: '60111'
+	level: '8'
+	description: 'User account disabled or deleted'
+	groups: '['windows', 'windows_security', 'adduser', 'account_changed']'
+	firedtimes: '1'
+	gdpr: '['IV_35.7.d', 'IV_32.2']'
+	gpg13: '['7.10']'
+	hipaa: '['164.312.a.2.I', '164.312.a.2.II', '164.312.b']'
+	mail: 'True'
+	mitre.id: '['T1098', 'T1531']'
+	mitre.tactic: '['Persistence', 'Impact']'
+	mitre.technique: '['Account Manipulation', 'Account Access Removal']'
+	nist_800_53: '['AC.2', 'IA.4', 'AU.14', 'AC.7']'
+	pci_dss: '['8.1.2', '10.2.5']'
+	tsc: '['CC6.8', 'CC7.2', 'CC7.3']'
+**Alert to be generated.

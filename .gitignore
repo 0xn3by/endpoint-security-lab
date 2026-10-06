@@ -1,0 +1,14 @@
+.env
+.runtime/
+evidence/private/
+__pycache__/
+*.pyc
+*.evtx
+*.pem
+*.key
+*.pfx
+*.msi
+*.zip
+.venv/
+/tools/
+/audit-policy-before.csv

@@ -1,0 +1,29 @@
+
+
+Starting wazuh-logtest v4.14.8
+Type one log per line
+
+**Phase 1: Completed pre-decoding.
+	full event: '{"win": {"system": {"providerName": "Microsoft-Windows-Sysmon", "channel": "Microsoft-Windows-Sysmon/Operational", "eventID": "1", "severityValue": "INFORMATION", "computer": "SYNTHETIC-CONTRACT-ONLY"}, "eventdata": {"image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "commandLine": "powershell.exe -EncodedCommand VwA="}}}'
+
+**Phase 2: Completed decoding.
+	name: 'json'
+	win.eventdata.commandLine: 'powershell.exe -EncodedCommand VwA='
+	win.eventdata.image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+	win.system.channel: 'Microsoft-Windows-Sysmon/Operational'
+	win.system.computer: 'SYNTHETIC-CONTRACT-ONLY'
+	win.system.eventID: '1'
+	win.system.providerName: 'Microsoft-Windows-Sysmon'
+	win.system.severityValue: 'INFORMATION'
+
+**Phase 3: Completed filtering (rules).
+	id: '100100'
+	level: '8'
+	description: 'EDR lab: PowerShell encoded command or execution policy bypass'
+	groups: '['edr_lab']'
+	firedtimes: '1'
+	mail: 'True'
+	mitre.id: '['T1059.001']'
+	mitre.tactic: '['Execution']'
+	mitre.technique: '['PowerShell']'
+**Alert to be generated.

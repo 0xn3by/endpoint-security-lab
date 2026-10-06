@@ -6,7 +6,7 @@ Investigate repeated connections from an unexpected process to a controlled test
 
 ## Available fields and detection logic
 
-Windows candidate rule **100130** uses `win.eventdata.image` and `win.eventdata.destinationPort`, under `sysmon_event3`. It matches powershell.exe connecting to TCP test port 18080. Obtain `processGuid`, `processId`, `user`, `sourceIp`, `sourcePort`, `destinationIp`, `destinationPort`, `protocol`, `initiated` and `utcTime` from your actual Event 3 before finalizing it. Join Event 1 to get parent/command line/hash; these are not promised in Event 3. Native collection is NOT VERIFIED.
+Windows candidate rule **100130** uses `win.eventdata.image` and `win.eventdata.destinationPort`, under `sysmon_event3`. It matches powershell.exe and destination port 18080; the rule does not constrain protocol or destination address. Verify TCP/loopback context from the event during triage. Obtain `processGuid`, `processId`, `user`, `sourceIp`, `sourcePort`, `destinationIp`, `destinationPort`, `protocol`, `initiated` and `utcTime` from your actual Event 3 before finalizing it. Join Event 1 to get parent/command line/hash; these are not promised in Event 3. Native collection is NOT VERIFIED.
 
 Linux rule **100140** uses the actually observed decoded fields `lab.source`, `event.action`, `destination.ip`, and `destination.port`. It requires the helper source, `connection_accepted`, 127.0.0.1 and port 18080. The real alert wraps them under `data`. Actual samples: [events](../evidence/validation/live-network/events.redacted.jsonl), [alert extracts](../evidence/validation/live-network/alerts.extract.jsonl).
 

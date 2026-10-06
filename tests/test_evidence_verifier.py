@@ -10,7 +10,12 @@ from verify_ingestion import verify
 
 class EvidenceVerifierTests(unittest.TestCase):
     def setUp(self):
-        self.event = {'lab': {'run_id': 'unit-test'}, 'process': {'pid': 42}, 'source': {'port': 50000}}
+        self.event = {
+            'lab': {'run_id': 'unit-test', 'source': 'edr-lab-network-observer'},
+            'timestamp': '2026-01-01T00:00:00+00:00',
+            'event': {'action': 'connection_accepted'}, 'process': {'pid': 42},
+            'source': {'ip': '127.0.0.1', 'port': 50000},
+            'destination': {'ip': '127.0.0.1', 'port': 18080}}
         self.alert = {'rule': {'id': '100140'}, 'data': copy.deepcopy(self.event)}
 
     def test_matching_actual_shape(self):
@@ -35,6 +40,38 @@ class EvidenceVerifierTests(unittest.TestCase):
         second['source']['port'] = 50001
         with self.assertRaises(ValueError):
             verify([self.event, second], [self.alert])
+
+    def test_contradictory_alert_fields_fail(self):
+        for section, field, value in (
+                ('destination', 'ip', '192.0.2.1'),
+                ('destination', 'port', 443),
+                ('source', 'ip', '192.0.2.2'),
+                ('lab', 'source', 'unrelated'),
+                ('event', 'action', 'unrelated')):
+            with self.subTest(field=field, section=section):
+                alert = copy.deepcopy(self.alert)
+                alert['data'][section][field] = value
+                with self.assertRaises(ValueError):
+                    verify([self.event], [alert])
+
+    def test_wrong_source_time_fails(self):
+        self.alert['data']['timestamp'] = '2026-01-02T00:00:00+00:00'
+        with self.assertRaises(ValueError):
+            verify([self.event], [self.alert])
+
+    def test_duplicate_source_fails(self):
+        with self.assertRaises(ValueError):
+            verify([self.event, self.event], [self.alert])
+
+    def test_decoder_numeric_strings_match(self):
+        for section, field in (('process', 'pid'), ('source', 'port'), ('destination', 'port')):
+            self.alert['data'][section][field] = str(self.alert['data'][section][field])
+        self.assertEqual(verify([self.event], [self.alert])['unique_connections'], 1)
+
+    def test_missing_destination_fails(self):
+        del self.alert['data']['destination']
+        with self.assertRaises(ValueError):
+            verify([self.event], [self.alert])
 
 
 if __name__ == '__main__':

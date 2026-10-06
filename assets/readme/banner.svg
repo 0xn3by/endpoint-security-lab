@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">EDR Endpoint Detection and Investigation Lab</title>
+  <desc id="desc">Personal endpoint security lab. Follow the process, explain the evidence. A conceptual path connects observation, investigation and reporting.</desc>
+  <rect width="1200" height="320" rx="16" fill="#0d1726"/>
+  <path d="M0 280H1200M780 0V320" stroke="#263548" stroke-width="1"/>
+  <rect x="48" y="43" width="4" height="23" fill="#59d6c3"/>
+  <text x="66" y="61" fill="#59d6c3" font-family="DejaVu Sans,Arial,sans-serif" font-size="15" letter-spacing="3">PERSONAL ENDPOINT SECURITY LAB</text>
+  <text x="48" y="128" fill="#f1f5f9" font-family="DejaVu Sans,Arial,sans-serif" font-size="43" font-weight="700">Follow the process.</text>
+  <text x="48" y="184" fill="#f1f5f9" font-family="DejaVu Sans,Arial,sans-serif" font-size="43" font-weight="700">Explain the evidence.</text>
+  <text x="50" y="230" fill="#aabbd0" font-family="DejaVu Sans,Arial,sans-serif" font-size="17">Telemetry. Context. Defensible decisions.</text>
+  <text x="50" y="305" fill="#91a7c0" font-family="DejaVu Sans Mono,monospace" font-size="12" letter-spacing="1">COLLECT / DETECT / INVESTIGATE / DOCUMENT</text>
+  <g fill="none" stroke="#59d6c3" stroke-width="2">
+    <path d="M837 82V221"/>
+    <rect x="826" y="60" width="22" height="22" rx="4" fill="#0d1726"/>
+    <rect x="826" y="137" width="22" height="22" rx="4" fill="#0d1726"/>
+    <rect x="826" y="214" width="22" height="22" rx="4" fill="#0d1726"/>
+    <path d="m832 225 4 4 7-8"/>
+  </g>
+  <g font-family="DejaVu Sans,Arial,sans-serif">
+    <g fill="#f1f5f9" font-size="19" font-weight="700">
+      <text x="870" y="78">Observe</text>
+      <text x="870" y="155">Investigate</text>
+      <text x="870" y="232">Report</text>
+    </g>
+    <g fill="#91a7c0" font-size="13">
+      <text x="870" y="101">Process / user / network</text>
+      <text x="870" y="178">Ancestry / intent / scope</text>
+      <text x="870" y="255">Severity / escalation</text>
+    </g>
+  </g>
+</svg>

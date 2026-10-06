@@ -1,0 +1,24 @@
+
+
+Starting wazuh-logtest v4.14.8
+Type one log per line
+
+**Phase 1: Completed pre-decoding.
+
+**Phase 2: Completed decoding.
+	name: 'json'
+	win.eventdata.destinationPort: '443'
+	win.eventdata.image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+	win.system.channel: 'Microsoft-Windows-Sysmon/Operational'
+	win.system.computer: 'SYNTHETIC-CONTRACT-ONLY'
+	win.system.eventID: '3'
+	win.system.providerName: 'Microsoft-Windows-Sysmon'
+	win.system.severityValue: 'INFORMATION'
+
+**Phase 3: Completed filtering (rules).
+	id: '61605'
+	level: '0'
+	description: 'Sysmon - Event 3: Network connection to :443 by C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+	groups: '['windows', 'sysmon', 'sysmon_event3']'
+	firedtimes: '1'
+	mail: 'False'

@@ -1,0 +1,21 @@
+
+
+Starting wazuh-logtest v4.14.8
+Type one log per line
+
+**Phase 1: Completed pre-decoding.
+
+**Phase 2: Completed decoding.
+	name: 'json'
+	win.system.channel: 'Security'
+	win.system.computer: 'SYNTHETIC-CONTRACT-ONLY'
+	win.system.providerName: 'Microsoft-Windows-Security-Auditing'
+	win.system.severityValue: 'AUDIT_SUCCESS'
+
+**Phase 3: Completed filtering (rules).
+	id: '60103'
+	level: '0'
+	description: 'Windows audit success event'
+	groups: '['windows', 'windows_security']'
+	firedtimes: '1'
+	mail: 'False'

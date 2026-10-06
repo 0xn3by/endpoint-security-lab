@@ -1,5 +1,10 @@
 # Final endpoint lab report
 
+This report describes the retained build run. The [current audit](../docs/VALIDATION.md)
+rechecked its network evidence and passed ten verifier tests; fresh Docker and
+Windows execution remain NOT VERIFIED. PowerShell parser execution below is a
+historical note without a retained transcript, not independently verified here.
+
 ## Scope and delivered implementation
 
 Personal lab and portfolio work only. The repository contains four harmless Windows simulation scripts, a real Linux network fallback, Wazuh manager Compose deployment, optional full-stack preparation, Sysmon/agent configuration, five custom rules, isolated rule tests, evidence helpers, investigation records, triage playbook, interview notes, resume wording and manual screenshot instructions.
@@ -14,15 +19,15 @@ The Windows detection contract suite passed 15 positive/negative/missing-field c
 
 The Fedora host had Docker and Python, roughly 6 GB available RAM and 31 GB free disk at inspection. No registered Windows VM was available. Native scenario execution, Sysmon/Security collection, Windows agent enrollment, live Windows field validation and cleanup are **NOT VERIFIED**. Incidents 001–003 are prepared worksheets, with no invented host IDs, times or findings. No screenshots were generated.
 
-Full-stack preparation and startup were executed successfully: pinned upstream checkout, generated credentials, indexer bcrypt hashes, Compose validation and local TLS certificates. [The recorded check](../evidence/validation/full-stack.json) at 2026-10-06T04:44:41.997032Z returned HTTP 200 for the indexer and dashboard, both green, and HTTP 200 for manager API authentication. Filebeat's output test confirmed a TLS connection to the indexer. Native Windows scenario alert presentation and screenshots remain **NOT VERIFIED**.
+Full-stack preparation and startup were executed successfully: pinned upstream checkout, generated credentials, indexer bcrypt hashes, Compose validation and local TLS certificates. [The recorded check](../evidence/validation/full-stack.json) at 2026-10-06T04:44:41.997032Z returned HTTP 200 for the indexer and dashboard, both green, and HTTP 200 for manager API authentication. The earlier build notes report a successful Filebeat output test, but no transcript is retained; this specific result is NOT VERIFIED by the current audit. Native Windows scenario alert presentation and screenshots remain **NOT VERIFIED**.
 
-The initial password utility invocation required an explicit Java home; the helper now sets it and keeps regenerated credentials private. The generated lab CA requires compatibility-mode verification in newer Python; the health helper still validates its CA chain. These environment findings are documented in setup. Lab services are stopped after validation to free host memory; their configurations and evidence volumes remain available.
+The initial password utility invocation required an explicit Java home; the helper now sets it and keeps regenerated credentials private. The generated lab CA requires compatibility-mode verification in newer Python; the health helper still validates its CA chain. These environment findings are documented in setup. The build notes record that services were stopped after validation. Current service state and volume availability are NOT VERIFIED in the restricted audit session.
 
 ## Engineering findings
 
 - The official manager image needs its initialization stage before the Wazuh control script can start. The lab entrypoint handles fresh creation and later restarts.
 - CLI logtest treats supplied JSON differently from native Windows EventChannel collection. A disposable test container contains the compatibility adjustment, with its scope explicitly recorded.
-- Repository syntax/path checks passed, and five evidence-verifier regression cases passed, including execution with Python optimization enabled. Missing or unrelated alerts cannot satisfy the verifier.
+- Repository syntax/path checks passed, and the original five evidence-verifier regression cases passed, including execution with Python optimization enabled. Missing or unrelated alerts cannot satisfy the verifier.
 - Detection priorities are separate from incident severity. The known loopback test is benign even though its expected rule fires.
 - Local account creation is distinct from privilege elevation; the safe simulation creates a disabled standard account. No administrator addition is claimed.
 - Persistence artifact creation is distinct from successful persistence execution. The lab Run value only points to a harmless marker command.

@@ -1,0 +1,10 @@
+<Sysmon schemaversion="4.90">
+  <HashAlgorithms>sha256</HashAlgorithms>
+  <EventFiltering>
+    <RuleGroup name="Lab process context" groupRelation="or"><ProcessCreate onmatch="exclude" /></RuleGroup>
+    <RuleGroup name="Lab network context" groupRelation="or"><NetworkConnect onmatch="exclude" /></RuleGroup>
+    <RuleGroup name="Lab Run key" groupRelation="or">
+      <RegistryEvent onmatch="include"><TargetObject condition="contains">\Software\Microsoft\Windows\CurrentVersion\Run</TargetObject></RegistryEvent>
+    </RuleGroup>
+  </EventFiltering>
+</Sysmon>

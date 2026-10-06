@@ -1,5 +1,11 @@
 # Manual screenshot checklist
 
+Audit 2026-10-06: this directory contains no screenshots. Runtime evidence is
+listed in [validation](../docs/VALIDATION.md); SVG branding is not evidence.
+The Linux network capture must be labeled loopback/helper telemetry, not a
+suspicious external connection. Account creation is not group modification;
+capture a 4732 group change only if you separately implement and verify it.
+
 No screenshots have been generated. Capture only actual UI/terminal evidence from your run. Use PNG, readable text, a narrow UTC window and consistent host pseudonyms. Redact credentials, public IPs, personal usernames, unrelated logs and enrollment keys. Keep original evidence private; screenshots supplement raw events rather than replacing them.
 
 1. **01-agent-connected.png:** Wazuh agent list showing EDR-WIN01 Active, agent ID and last keepalive. Manager-only alternative: `agent_control -l` output. Do not substitute manager agent 000 for a Windows enrollment.

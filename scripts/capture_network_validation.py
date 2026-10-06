@@ -12,6 +12,18 @@ from verify_ingestion import verify
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def alert_extract(alert):
+    """Keep actual comparison fields so public evidence can be checked offline."""
+    data = alert['data']
+    return {'timestamp': alert['timestamp'], 'id': alert.get('id'), 'rule': alert['rule'],
+            'agent': {'id': alert['agent']['id'], 'name': 'MANAGER-REDACTED'},
+            'location': alert['location'], 'lab_run_id': data['lab']['run_id'],
+            'source_port': data['source']['port'],
+            'data': {**{key: copy.deepcopy(data[key]) for key in
+                       ('lab', 'timestamp', 'event', 'source', 'destination')},
+                     'process': {'pid': data['process']['pid']}}}
+
+
 def main():
     candidates = list((ROOT / 'evidence/private').glob('*/network.jsonl'))
     if not candidates:
@@ -50,10 +62,7 @@ def main():
         event['user']['name'] = 'LAB-USER-REDACTED'
         event['process']['command_line'] = event['process']['command_line'].replace(str(ROOT), '<REPOSITORY>')
     # Publish the relevant real alert fields, explicitly as an extract rather than raw alerts.
-    extracts = [{'timestamp': a['timestamp'], 'id': a.get('id'), 'rule': a['rule'],
-                 'agent': {'id': a['agent']['id'], 'name': 'MANAGER-REDACTED'},
-                 'location': a['location'], 'lab_run_id': a['data']['lab']['run_id'],
-                 'source_port': a['data']['source']['port']} for a in alerts]
+    extracts = [alert_extract(a) for a in alerts]
     (public / 'events.redacted.jsonl').write_text(''.join(json.dumps(e) + '\n' for e in sanitized))
     (public / 'alerts.extract.jsonl').write_text(''.join(json.dumps(a) + '\n' for a in extracts))
     (public / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')

@@ -1,5 +1,11 @@
 # Local validation record — 2026-10-06
 
+Historical build notes. The current audit reran only the checks documented in
+[docs/VALIDATION.md](../../docs/VALIDATION.md). PowerShell parser and Filebeat
+execution below were not independently rerun; no retained parser/Filebeat
+transcript is supplied, so those specific runtime claims are NOT VERIFIED by
+this audit. The five-test count below predates the current ten-test verifier.
+
 These are checks executed while building this repository, not projected results.
 
 - `python3 scripts/check_repository.py`: PASS; eight Python files parsed, four XML/config files parsed, 90 local Markdown link targets checked, zero failures at the recorded final check.

@@ -1,15 +1,24 @@
-# Resume wording — personal project
+# Resume evidence — personal project
 
-Use these bullets for the repository's currently evidenced state:
+## Three bullet options
 
-- Built a Wazuh-based personal endpoint detection and investigation lab with harmless PowerShell, persistence, account-creation and local network scenarios, reproducible setup, and documented validation limits.
-- Verified locally generated TCP connection telemetry reaching a containerized Wazuh manager, correlating process context and connection records with matching alerts and preserving reproducible evidence.
-- Developed endpoint triage playbooks, candidate Windows detection rules, and investigation records covering process ancestry, command-line analysis, false positives, severity and escalation decisions.
+- Built a personal Wazuh lab with five custom rules and safe simulation scripts for PowerShell, Run-key changes, account creation and loopback network activity; documented native Windows validation gaps.
+- Correlated six retained helper-observed TCP connections with six Wazuh rule 100140 alerts using run IDs, timestamps, process IDs and network fields; documented a benign LOW-severity investigation.
+- Developed endpoint triage playbooks and evidence-verification tooling with ten passing regression tests, separating process attribution, false-positive assessment and escalation decisions from unsupported conclusions.
 
-**Concise description:** Personal endpoint-security lab demonstrating a Wazuh monitoring pipeline and evidence-driven investigation workflow, with four safe scenarios and explicit tracking of unverified Windows steps.
+## Concise project description
 
-**Technologies:** Wazuh 4.14.8, Docker Compose, Fedora/Linux, Python; Windows PowerShell, Sysmon and Windows Event Logs in the supplied VM setup.
+Personal Wazuh endpoint investigation lab with a retained Linux telemetry-to-alert case, candidate Windows rules and explicit manual gates for Sysmon/agent execution.
 
-**Skills:** endpoint telemetry analysis, detection engineering fundamentals, process/user/network correlation, evidence preservation, alert triage, severity assessment, escalation rationale and incident documentation.
+## Technology list
 
-After collecting and reviewing actual Windows evidence, update the bullets to describe exactly what was verified. Do not claim production SOC employment, enterprise EDR deployment, real compromise, reduced response time, or detection-rate metrics from this lab.
+Wazuh 4.14.8, Docker Compose, Python, Linux, JSON/XML; Windows PowerShell 5.1, Sysmon and Windows Event Logs in the supplied but runtime-unverified VM workflow.
+
+## Strongest measured facts
+
+- Six source connection records and six matching retained alerts; exact run in [case 004](../investigations/incident-004.md).
+- 2.504257 seconds between the first and last retained connection observations; not a response-time or detection-latency metric.
+- Ten verifier tests passed in [current local checks](../evidence/validation/audit-local.json).
+- Fifteen retained synthetic Wazuh contract transcripts support five predicates; these were inspected, not rerun in this audit.
+
+See [validation](VALIDATION.md). Do not claim native Windows collection, completed Windows investigations, administrator-group modification, commercial EDR response, enterprise experience, detection accuracy or improved response times. Explain what you personally ran versus what you inspected in retained evidence.

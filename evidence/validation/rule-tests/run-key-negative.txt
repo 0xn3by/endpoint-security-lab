@@ -1,0 +1,23 @@
+
+
+Starting wazuh-logtest v4.14.8
+Type one log per line
+
+**Phase 1: Completed pre-decoding.
+
+**Phase 2: Completed decoding.
+	name: 'json'
+	win.eventdata.targetObject: 'HKU\TEST\Software\Vendor\Preference'
+	win.system.channel: 'Microsoft-Windows-Sysmon/Operational'
+	win.system.computer: 'SYNTHETIC-CONTRACT-ONLY'
+	win.system.eventID: '13'
+	win.system.providerName: 'Microsoft-Windows-Sysmon'
+	win.system.severityValue: 'INFORMATION'
+
+**Phase 3: Completed filtering (rules).
+	id: '61615'
+	level: '0'
+	description: 'Sysmon - Event 13: RegistryEvent  on HKU\TEST\Software\Vendor\Preference by '
+	groups: '['windows', 'sysmon', 'sysmon_event_13']'
+	firedtimes: '1'
+	mail: 'False'

@@ -1,0 +1,16 @@
+name: edr-lab-contract
+services:
+  rulecheck:
+    image: wazuh/wazuh-manager:4.14.8
+    network_mode: none
+    entrypoint: ["/bin/bash", "-c"]
+    command: ["bash /test-entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "test -S /var/ossec/queue/sockets/logtest"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    volumes:
+      - ./config/manager.conf:/wazuh-config-mount/etc/ossec.conf:ro,z
+      - ./detections/local_rules.xml:/wazuh-config-mount/etc/rules/edr_lab_rules.xml:ro,z
+      - ./tests/logtest-entrypoint.sh:/test-entrypoint.sh:ro,Z

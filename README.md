@@ -1,137 +1,114 @@
-<p align="center">
-  <img src="assets/readme/banner.svg" alt="EDR lab: follow the process, explain the evidence. Observe, investigate, report." width="1200">
-</p>
+# Endpoint Detection & Investigation Lab
 
-<h1 align="center">EDR / Endpoint Detection &amp; Investigation Lab</h1>
+A personal **Wazuh endpoint investigation lab** with safe simulation scripts, custom rules, evidence checks and documented triage. Retained Linux loopback telemetry supports one completed investigation; Windows cases remain prepared workflows.
 
-<p align="center">
-  <a href="reports/final-endpoint-report.md"><img src="assets/readme/lab-badge.svg" alt="Scope: personal lab" height="28"></a>
-  <a href="compose.yaml"><img src="assets/readme/wazuh-badge.svg" alt="Wazuh version: 4.14.8" height="28"></a>
-  <a href="setup/wazuh-setup.md"><img src="assets/readme/docker-badge.svg" alt="Deployment: Docker Compose" height="28"></a>
-  <a href="reports/validation-matrix.md"><img src="assets/readme/windows-badge.svg" alt="Windows telemetry: not verified" height="28"></a>
-</p>
+> Personal cybersecurity lab. Retained activity comes from a controlled environment. This project does not represent production SOC or enterprise experience.
 
-<p align="center">
-  <a href="setup/README.md">Set up the lab</a> &middot;
-  <a href="docs/endpoint-triage-playbook.md">Triage playbook</a> &middot;
-  <a href="reports/validation-matrix.md">Validation matrix</a> &middot;
-  <a href="docs/interview-notes.md">Interview notes</a>
-</p>
+**Current evidence:** six retained helper-observed connections and six matching Wazuh alerts, rechecked offline. **Native Windows execution and agent telemetry: NOT VERIFIED.** [Validation details](docs/VALIDATION.md).
 
-<p align="center"><sub>Static repository badges; validation status links to the recorded evidence.</sub></p>
+## What This Project Demonstrates
 
-A personal endpoint-security portfolio project built around Wazuh, safe activity simulations, and evidence-based SOC triage. It shows how to move from an endpoint event to a defensible investigation: process ancestry, command-line analysis, user context, correlation, legitimate explanations, severity and escalation.
+- Wazuh manager configuration and custom detection rules.
+- Correlation of endpoint-helper telemetry with retained Wazuh alerts.
+- Process launch, user, destination and timestamp investigation.
+- Candidate Windows rules for PowerShell, persistence and account creation.
+- Sysmon process GUID and parent-process investigation methodology.
+- False-positive assessment, severity, escalation and evidence documentation.
 
-> **Lab only.** No production SOC experience or real company incident is claimed. The Linux loopback path has real telemetry and matching Wazuh alerts. Native Windows scenarios remain **NOT VERIFIED** until executed in a Windows VM. See the [validation matrix](reports/validation-matrix.md) for precise scope.
+## Architecture
 
-## Why this project
+```text
+Retained executed path:
+Linux loopback sockets → helper JSON → manager localfile → rule 100140 → investigation
 
-An alert identifies behavior; it does not establish intent. Encoded PowerShell can be administrator automation, a Run key can belong to an approved application, and repeated connections can be health checks. This lab makes those distinctions explicit and ties conclusions to preserved evidence.
+Windows path — NOT VERIFIED:
+PowerShell simulation → Sysmon / Security logs → Wazuh agent → manager rules
+                                                                  ↓
+                                                  Process/user/network investigation
+```
 
-Skills demonstrated include telemetry pipeline validation, candidate detection development, process/user/network correlation, evidence handling, false-positive analysis, severity assessment, escalation reasoning and reproducible documentation. Wazuh, Docker Compose, Fedora and Python support the executed path; Windows PowerShell, Sysmon and Windows Event Logs support the supplied VM workflow.
+Root Compose runs the manager **without a dashboard**. A separate optional stack adds an indexer and dashboard. Helper process attribution comes from a launched child, not kernel telemetry. [Architecture](architecture/architecture.md).
 
-## Quick start on Fedora/Linux
+## Technology
 
-Install prerequisites using [setup](setup/README.md). From this repository root:
+| Technology | Role |
+| --- | --- |
+| Wazuh 4.14.8 / Docker Compose | Manager, rules, optional full stack |
+| Python / Linux | Loopback helper and evidence verification |
+| Windows PowerShell 5.1 | Supplied VM simulations; execution pending |
+| Sysmon / Windows Event Logs | Planned Event 1/3/13, Security 4720 and optional 4104 collection |
+
+## Scenarios
+
+Pending-case severity is a triage guide, not an observed disposition.
+
+| Scenario | Detection Objective | Evidence | Severity | Status |
+| --- | --- | --- | --- | --- |
+| [PowerShell](scenarios/01-suspicious-powershell/README.md) | Encoded/bypass arguments, rule 100100 | [Synthetic rule output](evidence/validation/rule-tests/powershell-encoded.txt), [worksheet](investigations/incident-001.md) | MEDIUM pending context | PARTIALLY VERIFIED |
+| [Persistence indicator](scenarios/02-persistence/README.md) | Run value set, rule 100110 | [Synthetic rule output](evidence/validation/rule-tests/run-key.txt), [worksheet](investigations/incident-002.md) | MEDIUM pending context | PARTIALLY VERIFIED |
+| [Account creation](scenarios/03-privileged-account-change/README.md) | Security 4720, rule 100120 | [Synthetic rule output](evidence/validation/rule-tests/account-created.txt), [worksheet](investigations/incident-003.md) | MEDIUM pending context | PARTIALLY VERIFIED |
+| [Windows network](scenarios/04-suspicious-outbound-connection/README.md) | PowerShell to test port, rule 100130 | [Synthetic rule output](evidence/validation/rule-tests/network-test-port.txt) | Pending investigation | PARTIALLY VERIFIED |
+| [Linux helper connections](scenarios/04-suspicious-outbound-connection/README.md) | Accepted loopback connection, rule 100140 | [Events](evidence/validation/live-network/events.redacted.jsonl), [alerts](evidence/validation/live-network/alerts.extract.jsonl), [case 004](investigations/incident-004.md) | LOW, authorized test | VERIFIED |
+
+**VERIFIED applies only to the retained Linux run.** Synthetic contracts do not establish native detection. The account script creates a disabled standard account; administrator-group modification is not implemented. Run-key creation does not prove logon execution.
+
+## Investigation Workflow
+
+Endpoint Activity → Telemetry → Wazuh → Alert → Process/User/Network Investigation → Severity → Escalation → Remediation recommendation.
+
+[Playbook](docs/endpoint-triage-playbook.md) · [Report](reports/final-endpoint-report.md) · [Interview notes](docs/interview-notes.md).
+
+## Example Investigation
+
+[Case 004](investigations/incident-004.md) correlates six retained connections to `127.0.0.1:18080` over **2.504257 seconds** with six rule 100140 alerts. Evidence includes run ID, source ports, process launch context and separate source/alert times.
+
+Repeated interpreter traffic merits review, but development tools and health checks are legitimate alternatives. The known helper and controlled listener support **LOW**, benign authorized activity, with no escalation. Neither C2 nor exfiltration is established.
+
+## Evidence / Screenshots
+
+[Evidence provenance](evidence/README.md) separates actual observations from synthetic rule tests. [Current output](evidence/validation/audit-local.json) records local checks. **No screenshots are included.** Follow the [capture guide](screenshots/README.md) for agent status, events, process context, alerts and timeline.
+
+## Detection Engineering
+
+Windows candidates use `win.eventdata.image`, `commandLine`, `targetObject`, `destinationPort` and `win.system.eventID`. Rule fields omit the alert wrapper's `data.` prefix. Confirm native fields in the VM before claiming coverage.
+
+Rule 100140 checks helper source, accepted-connection action and loopback destination/port. Network rules match individual events; repetition is investigated separately. Tune using approved process/actor context and actual baselines. Rule level is separate from incident severity. [Methodology](docs/detection-methodology.md).
+
+## Reproduce the Lab
+
+Offline checks from the repository root:
 
 ```bash
-cp .env.example .env
-mkdir -p .runtime/telemetry
-touch .runtime/telemetry/network.jsonl
+python3 scripts/check_repository.py
+python3 -O -m unittest discover -s tests -v
+python3 scripts/verify_ingestion.py evidence/validation/live-network/events.redacted.jsonl evidence/validation/live-network/alerts.extract.jsonl
+```
+
+Follow [manager setup](setup/wazuh-setup.md), preserve retained public evidence, then:
+
+```bash
 docker compose up -d --wait --wait-timeout 90
 python3 scripts/simulate_network_activity.py
 python3 scripts/capture_network_validation.py
 ```
 
-The simulation opens only 127.0.0.1:18080, makes six connections and exits. The verifier requires matching real alerts for the exact run. Originals stay under ignored `evidence/private/`; publication extracts are explicitly redacted. A new capture updates the public latest-run files, so preserve the original report's evidence and update [incident 004](investigations/incident-004.md) when publishing a new run.
+The helper contacts only loopback. Capture replaces public latest-run files; update the investigation when publishing a new run. [Windows setup](setup/README.md) requires a disposable VM; preserve evidence before cleanup.
 
-Root Compose runs the **manager engine without a dashboard**. Follow [Wazuh setup](setup/wazuh-setup.md) for the optional official manager/indexer/dashboard stack, generated credentials, enrollment, log verification and troubleshooting. Do not run both deployments on the same ports.
+## Validation Status
 
-The optional full stack was also started and verified: indexer/dashboard health and manager API authentication passed, and Filebeat connected successfully. [Infrastructure result](evidence/validation/full-stack.json). Services were stopped after validation to free memory; start the path you need using the documented commands.
+[docs/VALIDATION.md](docs/VALIDATION.md) separates retained evidence from fresh execution. Ten verifier tests pass locally. Docker access and loopback creation are blocked in this audit session. **NOT VERIFIED — requires local Wazuh/endpoint execution:** fresh health, Windows enrollment, native events/alerts and cleanup.
 
-## Endpoint telemetry flow
+## Limitations
 
-```mermaid
-flowchart TD
-  E[Endpoint] --> L[Sysmon / OS Logs]
-  L --> A[Wazuh Agent]
-  A --> M[Wazuh Manager]
-  M --> D[Detection / Alert]
-  D --> T[Endpoint Triage]
-  T --> C[Process / User / Network Correlation]
-  C --> S[Severity + Escalation]
-  S --> R[Incident Report]
-```
+Helper telemetry is not kernel EDR attribution. No commercial EDR backend, automated isolation, memory acquisition, enterprise baseline, production data or measured detection accuracy. Windows cases are worksheets, not completed investigations. No project license has been selected.
 
-This is the intended Windows path. The executed Linux fallback uses helper JSON and the manager's localfile collector. [Architecture and trust boundaries](architecture/architecture.md) explain both paths and their limitations.
+## What I Learned
 
-## Scenarios
+- Match event identity and rule fields before accepting ingestion evidence.
+- Process GUID joins need host context; Security 4720 does not supply process ancestry.
+- Persistence artifacts and account creation do not prove execution or privilege escalation.
+- An expected rule match can be benign; severity requires context.
 
-1. [Suspicious PowerShell](scenarios/01-suspicious-powershell/README.md): encoded harmless text plus whoami child process; investigate payload, parent, user, hash and behavior. Candidate rule 100100.
-2. [Persistence](scenarios/02-persistence/README.md): removable current-user Run value pointing to a harmless marker command. Candidate rule 100110; distinguish artifact creation from later execution.
-3. [Account creation](scenarios/03-privileged-account-change/README.md): create a disabled local standard account, inspect actor/target and potential privilege impact, then remove it. Candidate rule 100120. This scenario does not add administrator membership.
-4. [Controlled network activity](scenarios/04-suspicious-outbound-connection/README.md): repeated loopback TCP connections, process context and frequency analysis. Windows candidate rule 100130; verified Linux helper rule 100140.
+## Ethical Scope
 
-After [agent](setup/endpoint-agent-setup.md) and [Sysmon](setup/sysmon-setup.md) setup, run in Windows PowerShell 5.1 from `C:\EDR` (elevated for account creation/export):
-
-```powershell
-.\scripts\simulate_powershell_activity.ps1 -LabConfirmed
-.\scripts\simulate_persistence.ps1 -LabConfirmed
-.\scripts\simulate_account_change.ps1 -LabConfirmed
-.\scripts\simulate_network_activity.ps1 -LabConfirmed
-.\scripts\export_windows_evidence.ps1 -Minutes 15
-# After evidence capture:
-.\scripts\simulate_persistence.ps1 -LabConfirmed -Cleanup
-.\scripts\simulate_account_change.ps1 -LabConfirmed -Cleanup
-```
-
-Run one scenario at a time and verify its events before continuing. The scripts reject collisions with existing lab-named artifacts. No script downloads or executes malware or contacts an external test target.
-
-## Investigation and response workflow
-
-Use the [18-question endpoint triage playbook](docs/endpoint-triage-playbook.md). Preserve originals, identify host/user/process, reconstruct ancestry, inspect command lines and privilege, correlate nearby events, evaluate authorization and scope, assign LOW/MEDIUM/HIGH/CRITICAL, and explain escalation and remediation. Wazuh numeric levels do not determine final severity automatically.
-
-- [Detection methodology and field contracts](docs/detection-methodology.md)
-- [PowerShell investigation worksheet](investigations/incident-001.md)
-- [Persistence investigation worksheet](investigations/incident-002.md)
-- [Account investigation worksheet](investigations/incident-003.md)
-- [Executed Linux network investigation](investigations/incident-004.md)
-- [Reusable incident report](reports/incident-report-template.md)
-- [Final endpoint report](reports/final-endpoint-report.md)
-
-The first three records are prepared worksheets with evidence-dependent fields marked NOT VERIFIED. They must not be presented as completed investigations.
-
-## Verification
-
-```bash
-python3 scripts/check_repository.py
-docker compose config --quiet
-docker compose exec -T manager /var/ossec/bin/wazuh-analysisd -t
-python3 scripts/test_rules.py
-docker compose exec -T manager /var/ossec/bin/agent_control -l
-docker compose exec -T manager tail -n 20 /var/ossec/logs/alerts/alerts.json
-```
-
-Rule tests use explicitly synthetic JSON in a separate Wazuh container with a test-only decoder bridge. They exercise predicates and hierarchy, and do not prove Windows EventChannel transport. Actual Windows fields must still be inspected and rules adjusted if necessary before marking those scenarios complete.
-
-The [five-minute checklist](docs/five-minute-verification.md) covers quick operational checks. [Validation evidence](evidence/README.md) explains provenance, original hashes and redactions.
-
-## Findings and limitations
-
-The retained Linux run produced six actual connection records and six matching Wazuh alerts. It was classified LOW, benign authorized activity, with no escalation. The finding is bounded to helper-observed loopback activity; it is not a detection-rate metric or evidence of enterprise protection.
-
-Windows VM execution, real Sysmon/Windows Security collection, agent ingestion and native scenario dashboard presentation require manual verification. The lab has no malware execution, independent kernel process attribution in the fallback, enterprise baseline, memory acquisition, automated isolation, tamper-resistance validation or fleet-scale evaluation. Per-connection rules do not automatically detect beaconing frequency.
-
-Future improvements: complete native evidence runs, add controlled private-VM network traffic if loopback is invisible, test authorized versus unauthorized group changes, collect richer process context, build a measured baseline, and expand persistence coverage only after validating actual fields.
-
-## Screenshots and career preparation
-
-Follow the [manual screenshot checklist](screenshots/README.md). No fake screenshots are included. Read [EDR concepts](docs/edr-concepts.md), [interview notes](docs/interview-notes.md), and [honest resume bullets](docs/resume-bullets.md).
-
-## References and ATT&CK
-
-- [Wazuh Docker deployment](https://documentation.wazuh.com/current/deployment-options/docker/wazuh-container.html) and [Windows log collection](https://documentation.wazuh.com/current/user-manual/capabilities/log-data-collection/configuration.html)
-- [Microsoft Sysmon](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon) and [Security event 4720](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4720)
-- [T1059.001 PowerShell](https://attack.mitre.org/techniques/T1059/001/), [T1547.001 Run keys](https://attack.mitre.org/techniques/T1547/001/), [T1136.001 Local account creation](https://attack.mitre.org/techniques/T1136/001/)
-
-ATT&CK describes simulated mechanisms, not proof of adversary intent. No C2/exfiltration mapping is forced onto the loopback exercise. No project license has been declared; upstream Wazuh and Microsoft components retain their own licenses.
+Controlled personal lab only. No malware or external attacks. Run Windows simulations in a disposable VM with documented cleanup.

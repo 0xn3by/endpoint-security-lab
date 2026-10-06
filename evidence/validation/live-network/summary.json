@@ -1,0 +1,14 @@
+{
+  "run_id": "937ce4fd-4cbf-42be-80e4-bd256764ec3a",
+  "unique_connections": 6,
+  "matching_alerts": 6,
+  "rule": "100140",
+  "status": "PASS",
+  "scope": "helper JSON -> manager localfile -> Wazuh alert; no Windows agent",
+  "verified_at": "2026-10-06T04:10:45.705944+00:00",
+  "first_event": "2026-10-06T03:59:19.425002+00:00",
+  "last_event": "2026-10-06T03:59:21.929259+00:00",
+  "raw_event_sha256": "0243bc23bb18f09a74f83e9a52ca223c890fff935c0660ef46aabee8a8a0e33a",
+  "duration_seconds": 2.504257,
+  "redactions": "host/user labels and repository path replaced; timestamps, PIDs, ports, executable hash retained"
+}

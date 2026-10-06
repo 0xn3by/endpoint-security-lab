@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-06T04:44:41.997032+00:00",
+  "status": "PASS",
+  "indexer_http": 200,
+  "indexer_health": "green",
+  "dashboard_http": 200,
+  "dashboard_state": "green",
+  "manager_api_auth_http": 200,
+  "scope": "authenticated localhost indexer and dashboard status APIs; no Windows telemetry or screenshots",
+  "tls": "generated CA chain validated in compatibility mode (CA lacks keyUsage); service-name/loopback hostname difference explicitly allowed; internal manager API probe uses its loopback self-signed certificate"
+}
